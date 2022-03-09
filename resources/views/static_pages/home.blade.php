@@ -9,7 +9,7 @@
             從這開始練習。
         </p>
         <p>
-            <a class="btn btn-lg btn-success" href="#">現在註冊</a>
+            <a class="btn btn-lg btn-success" href="{{route('signup')}}">現在註冊</a>
         </p>
     </div>
 @stop
