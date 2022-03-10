@@ -9,6 +9,9 @@
             </div>
             <div class="card-body" >
             <form action="{{route('users.store')}}" method="post">
+                {{csrf_field()}}
+                //上下等同
+                {{-- <input type="hidden" name="_token" value="fhcxqT67dNowMoWsAHGGPJOAWJn8x5R5ctSwZrAq"> --}}
                 <div class="form-grop">
                     <label for="name">姓名:</label>
                     <input type="text" name="name" class="form-control" value="{{old('name')}}">
