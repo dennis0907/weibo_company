@@ -12,14 +12,21 @@
                 <form action="{{route('login')}}" method="post">
                     {{ csrf_field() }}
 
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <label for="email">郵件:</label>
                         <input type="text" name="email" class="form-control" value="{{old('email')}}">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <label for="password">密碼:</label>
                         <input type="password" name="password" class="form-control" value="{{old('password')}}">
+                    </div>
+
+                    <div class="form-group mb-4 mt-2">
+                        <div class="form-check">
+                            <input type="checkbox" name="remember" id="exampleCheck1" class="form-check-input">
+                            <label for="exampleCheck1" class="form-check-label">記住我</label>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">登入</button>
