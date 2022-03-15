@@ -10,9 +10,11 @@ class UsersController extends Controller
     public function create() {
         return view('users.create');
     }
+
     public function show(User $user) {
         return view('users.show', compact('user'));
     }
+
     public function store(Request $request) {
         $this->validate($request,[
             'name' => 'required|unique:users|max:50',
@@ -29,5 +31,33 @@ class UsersController extends Controller
         Auth::login($user);
         session()->flash('success' , '歡迎，你註冊成功!!');
         return redirect()->route('users.show',[$user]);
+    }
+
+    public function edit(User $user) {
+        return view('users.edit',compact('user'));
+    }
+
+    public function update(Request $request,User $user) {
+        $this->validate($request,[
+            'name' => 'required|max:50',
+            // 'password' => 'required|confirmed|min:6'
+            'password' => 'nullable|confirmed|min:6'
+        ]);
+
+        // $user->update([
+        //     'name' => $request->name,
+        //     'password' => bcrypt($request->password)
+        // ]);
+
+        $data = [];
+        $data['name'] = $request->name;
+        if ($request->password) {
+            $data['password'] = bcrypt($request->password);
+        }
+        $user->update($data);
+
+        session()->flash('success','個人資料已更新完成');
+
+        return redirect()->route('users.show',$user->id);
     }
 }
