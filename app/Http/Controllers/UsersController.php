@@ -7,37 +7,61 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
+
+    public function __construct()
+    {   //以下頁面不需要認證['show','create','store']
+        $this->middleware('auth',[
+            'except' => ['show','create','store']
+        ]);
+
+        //只允許未登入訪問註冊頁面
+        $this->middleware('guest',[
+            'only' => ['create']
+        ]);
+    }
+
+
     public function create() {
+        //註冊頁面
         return view('users.create');
     }
 
     public function show(User $user) {
+        //用戶中心
+        $this->authorize('update',$user);
         return view('users.show', compact('user'));
     }
 
     public function store(Request $request) {
+        //註冊資料過濾
         $this->validate($request,[
             'name' => 'required|unique:users|max:50',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|confirmed|min:6'
         ]);
 
+        //資料庫寫入
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
 
+        //登入、返回成功訊息
         Auth::login($user);
         session()->flash('success' , '歡迎，你註冊成功!!');
         return redirect()->route('users.show',[$user]);
     }
 
+    //編輯頁面
     public function edit(User $user) {
+        $this->authorize('update',$user);
         return view('users.edit',compact('user'));
     }
 
     public function update(Request $request,User $user) {
+        //修改資料過濾
+        $this->authorize('update',$user);
         $this->validate($request,[
             'name' => 'required|max:50',
             // 'password' => 'required|confirmed|min:6'
@@ -49,6 +73,8 @@ class UsersController extends Controller
         //     'password' => bcrypt($request->password)
         // ]);
 
+        //1.密碼是否修改
+        //2.資料庫修改
         $data = [];
         $data['name'] = $request->name;
         if ($request->password) {
@@ -56,6 +82,7 @@ class UsersController extends Controller
         }
         $user->update($data);
 
+        //成功
         session()->flash('success','個人資料已更新完成');
 
         return redirect()->route('users.show',$user->id);

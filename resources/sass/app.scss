@@ -48,20 +48,20 @@ section.user_info {
       margin-bottom: 3px;
       margin-top: 15px;
     }
-  }
+}
 
-  .gravatar {
+.gravatar {
     float: left;
     max-width: 50px;
     border-radius: 50%;
-  }
+}
 
 
-  .gravatar_edit {
+.gravatar_edit {
     margin: 15px auto;
     text-align: center;
     .gravatar {
         float: none;
         max-width: 100px;
     }
-  }
+}
