@@ -11309,7 +11309,6 @@ footer img.brand-icon {
   height: 17px;
 }
 
-/* User gravatar */
 section.user_info {
   padding-bottom: 10px;
   margin-top: 20px;
@@ -11339,4 +11338,16 @@ section.user_info h1, section.user_info .h1 {
 .gravatar_edit .gravatar {
   float: none;
   max-width: 100px;
+}
+
+a {
+  text-decoration: none;
+}
+
+h2, .h2 {
+  font-weight: bold;
+}
+
+img {
+  margin-right: 10px;
 }

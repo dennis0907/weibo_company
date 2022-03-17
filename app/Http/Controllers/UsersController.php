@@ -11,7 +11,7 @@ class UsersController extends Controller
     public function __construct()
     {   //以下頁面不需要認證['show','create','store']
         $this->middleware('auth',[
-            'except' => ['show','create','store']
+            'except' => ['show','create','store','index']
         ]);
 
         //只允許未登入訪問註冊頁面
@@ -86,5 +86,11 @@ class UsersController extends Controller
         session()->flash('success','個人資料已更新完成');
 
         return redirect()->route('users.show',$user->id);
+    }
+
+    public function index() {
+
+        $users = User::paginate(6);
+        return view('users.index',compact('users'));
     }
 }
