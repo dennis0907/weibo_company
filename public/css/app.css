@@ -11348,6 +11348,6 @@ h2, .h2 {
   font-weight: bold;
 }
 
-img {
+.list-group-item img {
   margin-right: 10px;
 }

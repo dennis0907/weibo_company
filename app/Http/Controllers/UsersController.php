@@ -89,8 +89,17 @@ class UsersController extends Controller
     }
 
     public function index() {
-
-        $users = User::paginate(6);
+        //每頁資料數
+        $users = User::paginate(10);
         return view('users.index',compact('users'));
+    }
+
+    public function destroy(User $user) {
+        //只有admin權限可以操作
+        $this->authorize('destroy',$user);
+        //刪除使用者
+        $user->delete();
+        session()->flash('success','已成功刪除該用戶');
+        return back();
     }
 }
